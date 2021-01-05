@@ -3,7 +3,7 @@ import { ReactNode } from 'react'
 import styled from '@emotion/styled'
 
 // Types
-import { widgetMoreInfoTypes } from './widgetData';
+import { widgetMoreInfoTypes } from '../../data/widgetData';
 
 type WidgetPropsTypes = {
   imgSrc: string;
