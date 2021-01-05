@@ -18,7 +18,7 @@ const List = styled('ul')`
 export function SidebarList() {
   return (
     <List>
-      {sidebarData.map((data) => <SidebarItem {...data} />)}
+      {sidebarData.map((data) => <SidebarItem key={data.title} {...data} />)}
     </List>
   );
 }
