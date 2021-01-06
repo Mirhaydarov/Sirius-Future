@@ -1,5 +1,5 @@
 // Components
-import { ChartWidget } from '../ChartWidget';
+import { ChartWidget } from '../ChartWidget'
 
 // Component
 export function PaypalChartWidget() {
