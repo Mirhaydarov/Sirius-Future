@@ -9,23 +9,28 @@ import { ContextApp } from '../../init/reducer'
 // Types
 import { OptionsTypes } from '../../data/sidebarData';
 
-type SidebarItemPropsTypes = OptionsTypes
+type SidebarItemPropsTypes = OptionsTypes & {
+  currentPage: string;
+}
 
 type ItemTypes= {
   tabIndex: number;
+  currentPage: string;
 }
 
 type ItemLabelTypes = {
   isSidebarToggle: boolean;
 }
 
-type ItemLinkTypes = ItemLabelTypes
+type ItemLinkTypes = ItemLabelTypes & {
+  currentPage: string;
+}
 
 // Styled components
 const Item = styled('li')<ItemTypes>`
   color: #6F6F6F;
   margin-top: 2px;
-  border-left: 3px solid transparent;
+  border-left: 3px solid ${({ currentPage }) => currentPage === 'students'? '#2E71F3' : 'transparent'};
   
   :hover {
     border-left: 3px solid #2E71F3;
@@ -35,6 +40,8 @@ const Item = styled('li')<ItemTypes>`
 const ItemLink = styled('a')<ItemLinkTypes>`
   display: flex;
   font-size: 0.8rem;
+  background: ${({ currentPage }) => currentPage ? '#EDF0F5' : 'transparent'};
+  color:${({ currentPage }) => currentPage ? '#000000' : 'inherit'};
   padding: ${({ isSidebarToggle }) => 
     isSidebarToggle ? '0.6rem' : '0.78rem 0.6rem'};
   cursor: pointer;
@@ -60,14 +67,14 @@ const ItemLabel= styled('span')<ItemLabelTypes>`
 
 // Component
 export function SidebarItem(props: SidebarItemPropsTypes) {
-  const { title, path, icon } = props;
+  const { title, path, icon, currentPage } = props;
   const { state } = useContext(ContextApp);
   const { sidebar } = state;
 
   return (
-    <Item key={title} tabIndex={0}>
-      <Link href={`/[name]`} as={`/${path}`}>
-        <ItemLink isSidebarToggle={sidebar}>
+    <Item key={title} tabIndex={0} currentPage={currentPage}>
+      <Link href={`/${path}`}>
+        <ItemLink isSidebarToggle={sidebar} currentPage={currentPage}>
           <ItemIcon src={icon} alt={title}>
           </ItemIcon>
           <ItemLabel

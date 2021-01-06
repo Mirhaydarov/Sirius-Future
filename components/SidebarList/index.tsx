@@ -6,6 +6,8 @@ import { SidebarItem } from '../SidebarItem'
 
 // Instruments
 import { sidebarData } from '../../data/sidebarData'
+import { useContext } from 'react'
+import { ContextApp } from '../../init/reducer'
 
 // Styled components
 const List = styled('ul')`
@@ -16,9 +18,11 @@ const List = styled('ul')`
 
 // Component
 export function SidebarList() {
+  const { state: { currentPage }} = useContext(ContextApp);
+
   return (
     <List>
-      {sidebarData.map((data) => <SidebarItem key={data.title} {...data} />)}
+      {sidebarData.map((data) => <SidebarItem currentPage={currentPage === 'students' ? 'true' : ''} key={data.title} {...data} />)}
     </List>
   );
 }
