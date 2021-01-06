@@ -1,47 +1,41 @@
 // Core
-import { useContext } from 'react'
 import Head from 'next/head'
+import Link from 'next/link'
 import styled from '@emotion/styled'
 
-// Components
-import { Navbar } from '../components/Navbar'
-import { Header } from '../components/Header'
-import { Main } from '../components/Main'
-import { Footer } from '../components/Footer'
+// Styled components
+export const Wrap = styled('div')`
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+`
 
-// Instruments
-import { ContextApp  } from '../init/reducer'
+export const LinkWrap = styled('a')`
+  font-size: 0.7rem;
+  border-radius: 4px;
+  padding: 0.75rem;
+  color: #000000;
+  background-color: #FFFFFF;
+  border: 1px solid transparent;
+  cursor: pointer;
 
-// Types
-type WrapTypes = {
-  isSidebarToggle: boolean;
-}
-
-const Wrap = styled('div')<WrapTypes>`
-  width: 100%;
-  height: 100%;
-  padding-left: ${({ isSidebarToggle }) => isSidebarToggle ? '4rem' : '0'};
-  transition: 0.5s;
-
-  @media (min-width: 780px) {
-    padding-left: ${({ isSidebarToggle }) => isSidebarToggle ? '11.7rem' : '4rem'};
+  :hover, :active {
+    border: 1px solid #2E71F3;
   }
 `
 
 // Component
 export default function Index() {
-  const { state: { sidebar } } = useContext(ContextApp);
-
   return (
     <>
       <Head>
         <title>Home</title>
       </Head>
-      <Wrap isSidebarToggle={sidebar}>
-        <Navbar />
-        <Header />
-        <Main />
-        <Footer />
+      <Wrap>
+        <Link href='/students'><LinkWrap>Войти</LinkWrap></Link>
       </Wrap>
     </>
   );
