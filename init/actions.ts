@@ -1,7 +1,6 @@
 // Types
 import { 
   TOGGLE_SIDEBAR,
-  CURRENT_PAGE,
   FETCH_CHART_DATA,
   FETCH_YANDEX_CHART_DAY_DATA,
   FETCH_YANDEX_CHART_WEEK_DATA,
@@ -12,7 +11,6 @@ import {
   ChartTypes,
   ChartDataTypes,
   toggleSidebarActionTypes,
-  currentPageActionTypes,
   fetchChartDataActionTypes,
   fetchYandexChartDayDataActionTypes,
   fetchYandexChartWeekDataActionTypes,
@@ -25,13 +23,6 @@ import {
 export const toggleSidebar = (payload: boolean): toggleSidebarActionTypes => {
   return {
     type: TOGGLE_SIDEBAR,
-    payload,
-  };
-};
-
-export const sendCurrentPageName = (payload: string): currentPageActionTypes => {
-  return {
-    type: CURRENT_PAGE,
     payload,
   };
 };

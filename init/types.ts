@@ -21,7 +21,6 @@ export type ChartDataTypes = {
 
 export type InitialStateTypes = {
   sidebar: boolean;
-  currentPage: string;
   maxProceeds: number;
   chartData: {
     yandex: {
@@ -41,12 +40,6 @@ export const TOGGLE_SIDEBAR = 'TOGGLE_SIDEBAR';
 export type toggleSidebarActionTypes = {
   type: typeof TOGGLE_SIDEBAR,
   payload: boolean;
-}
-
-export const CURRENT_PAGE = 'CURRENT_PAGE';
-export type currentPageActionTypes = {
-  type: typeof CURRENT_PAGE,
-  payload: string;
 }
 
 export const FETCH_CHART_DATA = 'FETCH_CHART_DATA';
@@ -93,7 +86,6 @@ export type fetchPaypalChartMonthDataActionTypes = {
 
 export type RootReducerActionsTypes = 
   toggleSidebarActionTypes
-  | currentPageActionTypes
   | fetchChartDataActionTypes
   | fetchYandexChartDayDataActionTypes
   | fetchYandexChartWeekDataActionTypes
