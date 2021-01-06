@@ -4,7 +4,6 @@ import { createContext } from 'react'
 // Types 
 import {
   TOGGLE_SIDEBAR,
-  CURRENT_PAGE,
   FETCH_CHART_DATA,
   FETCH_YANDEX_CHART_DAY_DATA,
   FETCH_YANDEX_CHART_WEEK_DATA,
@@ -19,7 +18,6 @@ import {
 
 export const initialState: InitialStateTypes = {
   sidebar: true,
-  currentPage: '',
   maxProceeds: 80000,
   chartData: {
     yandex: {
@@ -43,12 +41,6 @@ export const rootReducer = (state = initialState, action: RootReducerActionsType
       return {
         ...state,
         sidebar: action.payload,
-      }
-
-    case CURRENT_PAGE:
-      return {
-        ...state,
-        currentPage: action.payload,
       }
 
     case FETCH_CHART_DATA:

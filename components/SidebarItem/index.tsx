@@ -7,15 +7,16 @@ import styled from '@emotion/styled'
 import { ContextApp } from '../../init/reducer'
 
 // Types
-import { OptionsTypes } from '../../data/sidebarData';
-
-type SidebarItemPropsTypes = OptionsTypes & {
-  currentPage: string;
+type SidebarItemPropsTypes = {
+  title: string;
+  path: string;
+  icon: string;
+  currentPage: boolean;
 }
 
 type ItemTypes= {
   tabIndex: number;
-  currentPage: string;
+  currentPage: boolean;
 }
 
 type ItemLabelTypes = {
@@ -23,14 +24,14 @@ type ItemLabelTypes = {
 }
 
 type ItemLinkTypes = ItemLabelTypes & {
-  currentPage: string;
+  currentPage: boolean;
 }
 
 // Styled components
 const Item = styled('li')<ItemTypes>`
   color: #6F6F6F;
   margin-top: 2px;
-  border-left: 3px solid ${({ currentPage }) => currentPage === 'students'? '#2E71F3' : 'transparent'};
+  border-left: 3px solid ${({ currentPage }) => currentPage ? '#2E71F3' : 'transparent'};
   
   :hover {
     border-left: 3px solid #2E71F3;
@@ -68,6 +69,7 @@ const ItemLabel= styled('span')<ItemLabelTypes>`
 // Component
 export function SidebarItem(props: SidebarItemPropsTypes) {
   const { title, path, icon, currentPage } = props;
+  
   const { state } = useContext(ContextApp);
   const { sidebar } = state;
 

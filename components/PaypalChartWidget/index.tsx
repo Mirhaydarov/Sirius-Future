@@ -5,7 +5,7 @@ import { ChartWidget } from '../ChartWidget'
 export function PaypalChartWidget() {
   return (
     <ChartWidget 
-      imgSrc='/images/paypal-logo.svg'
+      imgSrc='/images/paypal-logo.png'
       imgAlt='Paypal'
       imgWidth='108'
       imgHeight='28'

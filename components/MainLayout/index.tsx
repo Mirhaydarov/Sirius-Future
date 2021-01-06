@@ -1,5 +1,5 @@
 // Core
-import { useContext, useEffect, ReactNode } from 'react'
+import { useContext, ReactNode } from 'react'
 import styled from '@emotion/styled'
 
 // Instruments
