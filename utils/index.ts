@@ -8,7 +8,6 @@ import { chartSumFormatter } from './chartSumFormatter'
 import { weekChartFormatter } from './weekChartFormatter'
 import { trendingPercent } from './trendingPercent'
 import { mockChartData } from './mockChartData'
-import { upperFirstLetter } from './upperFirstLetter'
 import { setMonth } from './setMonth';
 import { setDay } from './setDay';
 
@@ -23,7 +22,6 @@ export {
   weekChartFormatter,
   trendingPercent,
   mockChartData,
-  upperFirstLetter,
   setMonth,
   setDay
 }
