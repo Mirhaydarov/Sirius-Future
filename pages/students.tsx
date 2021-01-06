@@ -3,6 +3,10 @@ import { InferGetStaticPropsType } from 'next'
 
 // Components
 import { MainLayout } from '../components/MainLayout'
+import { Navbar } from '../components/Navbar'
+import { Header } from '../components/Header'
+import { Main } from '../components/Main'
+import { Footer } from '../components/Footer'
 
 // Types
 import { ChartDataTypes } from '../init/types'
@@ -11,7 +15,14 @@ import { ChartDataTypes } from '../init/types'
 export default function Students({
   chartData
 }: InferGetStaticPropsType<typeof getStaticProps>) {
-  return <MainLayout chartData={chartData} />;
+  return (
+    <MainLayout>
+      <Navbar />
+      <Header />
+      <Main chartData={chartData}/>
+      <Footer />
+    </MainLayout>
+  );
 }
 
 export async function getStaticProps() {
