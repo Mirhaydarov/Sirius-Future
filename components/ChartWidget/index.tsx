@@ -1,5 +1,5 @@
 // Core
-import { MouseEvent, useState, useEffect } from 'react'
+import { MouseEvent, useState, useEffect, useContext } from 'react'
 import styled from '@emotion/styled'
 
 // Components
@@ -7,14 +7,29 @@ import { Button } from '../Base'
 import { Chart } from '../Chart'
 import { ChartHeader } from '../ChartHeader'
 
+// Actions
+import {
+  fetchYandexChartDayData,
+  fetchYandexChartWeekData,
+  fetchYandexChartMonthData,
+  fetchPaypalChartDayData,
+  fetchPaypalChartWeekData,
+  fetchPaypalChartMonthData
+} from '../../init/actions'
+
 // Utils
-import { mockChartData } from '../../utils/mockChartData'
-import { getSumOfProceeds, getCurrentMonthLength } from '../../utils'
+import { proceedsFormatter } from './proceedsFormatter'
+import { mockChartData } from '../../utils'
+import { getCurrentMonthLength } from '../../utils'
 
 // Types
 import { ChartHeaderTypes } from '../ChartHeader'
+import { ContextApp } from '../../init/reducer'
+import { ChartTypes } from '../../init/types'
 
-type ChartWidgetPropsTypes = ChartHeaderTypes
+type ChartWidgetPropsTypes = ChartHeaderTypes & {
+  type: 'yandex' | 'paypal';
+}
 
 // Styled components
 const Wrap = styled('div')`
@@ -55,37 +70,53 @@ const ChartWrap = styled('div')`
 
 // Component
 export function ChartWidget(props: ChartWidgetPropsTypes) {
-  const [currentBtn, setCurrentBtn] = useState('День');
-  const [data, setData] = useState([]);
+  const { type } = props;
 
-  const formatter = new Intl.NumberFormat('ru');
-  const proceedsSum = formatter.format(getSumOfProceeds(data));
-  const trendingSum = getSumOfProceeds(data);
+  const [currentBtn, setCurrentBtn] = useState('День');
+  const { state: { chartData }, dispatch} = useContext(ContextApp);
+  const [data, setData] = useState<ChartTypes []>([]);
+
+  const { proceedsSum, trendingSum } = proceedsFormatter(data);
 
   useEffect(() => {
-    setData(mockChartData(7));
-  }, []);
+    setData(chartData[type].day);
+  }, [chartData[type]]);
+  
 
-
-  function mockData(value: string) {
+  function switchChartDataType(value: string) {
     if (value === 'День') {
-      setData(mockChartData(7));
+      setData(chartData[type].day);
     }
 
     if (value === 'Неделя') {
-      setData(mockChartData(7, 'week'));
+      setData(chartData[type].week);
     }
 
     if (value === 'Месяц') {
-      setData(mockChartData(getCurrentMonthLength()));
+      setData(chartData[type].month);
     }
   }
 
-  function buttonHandler(event: MouseEvent<HTMLButtonElement>) {
+  function currentButton(event: MouseEvent<HTMLButtonElement>) {
     const element = event.target as HTMLButtonElement;
     const value = element.value;
     setCurrentBtn(value);
-    mockData(value);
+    return value;
+  }
+
+  function buttonHandler(event: MouseEvent<HTMLButtonElement>) {
+    const value = currentButton(event);
+    switchChartDataType(value);
+  }
+
+  function mockDataHandler(event: MouseEvent<HTMLButtonElement>) {
+    currentButton(event);
+    dispatch(fetchYandexChartDayData(mockChartData(7)))
+    dispatch(fetchPaypalChartDayData(mockChartData(7)))
+    dispatch(fetchYandexChartWeekData(mockChartData(7, 'week')))
+    dispatch(fetchPaypalChartWeekData(mockChartData(7, 'week')))
+    dispatch(fetchYandexChartMonthData(mockChartData(getCurrentMonthLength())))
+    dispatch(fetchPaypalChartMonthData(mockChartData(getCurrentMonthLength())))
   }
 
   return (
@@ -107,6 +138,11 @@ export function ChartWidget(props: ChartWidgetPropsTypes) {
             type='button'
             onClick={buttonHandler}
             isActive={currentBtn === 'Месяц' ? true : false}>Месяц</Button>
+          <Button
+            value='Новые данные'
+            type='button'
+            onClick={mockDataHandler}
+            isActive={currentBtn === 'Новые данные' ? true : false}>Новые данные</Button>
         </ButtonWrap>
         <ChartWrap>
           <ChartHeader {...props} desc={proceedsSum} trending={trendingSum}/>
