@@ -1,9 +1,24 @@
 // Core
+import { useContext, useEffect } from 'react'
 import styled from '@emotion/styled'
 
 // Components
 import { YandexChartWidget } from '../YandexChartWidget'
 import { PaypalChartWidget } from '../PaypalChartWidget'
+
+// Actions
+import { fetchChartData } from '../../init/actions'
+
+// Instruments
+import { ContextApp  } from '../../init/reducer'
+
+// Types
+import { ChartDataTypes } from '../../init/types'
+
+
+type MainPropsTypes = {
+  chartData: ChartDataTypes;
+}
 
 // Styled components
 const MainWrap = styled('main')`
@@ -28,7 +43,13 @@ const MainWrap = styled('main')`
 `
 
 // Component
-export function Main() {
+export function Main({ chartData }:MainPropsTypes) {
+  const { dispatch } = useContext(ContextApp);
+
+  useEffect(() => {
+    dispatch(fetchChartData(chartData));
+  }, []);
+
   return (
     <MainWrap>
       <YandexChartWidget />

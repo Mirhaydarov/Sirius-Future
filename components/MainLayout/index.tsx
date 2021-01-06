@@ -1,24 +1,13 @@
 // Core
-import { useContext, useEffect } from 'react'
+import { useContext, useEffect, ReactNode } from 'react'
 import styled from '@emotion/styled'
-
-// Components
-import { Navbar } from '../Navbar'
-import { Header } from '../Header'
-import { Main } from '../Main'
-import { Footer } from '../Footer'
-
-// Actions
-import { fetchChartData } from '../../init/actions'
 
 // Instruments
 import { ContextApp  } from '../../init/reducer'
 
 // Types
-import { ChartDataTypes } from '../../init/types'
-
 type MainLayoutPropsTypes = {
-  chartData: ChartDataTypes;
+  children: ReactNode;
 }
 
 type WrapTypes = {
@@ -38,20 +27,13 @@ const Wrap = styled('div')<WrapTypes>`
 `
 
 // Component
-export function MainLayout({ chartData }: MainLayoutPropsTypes) {
-  const { state: { sidebar }, dispatch } = useContext(ContextApp);
-
-  useEffect(() => {
-    dispatch(fetchChartData(chartData));
-  }, []);
+export function MainLayout({ children }: MainLayoutPropsTypes) {
+  const { state: { sidebar } } = useContext(ContextApp);
 
   return (
     <>
       <Wrap isSidebarToggle={sidebar}>
-        <Navbar />
-        <Header />
-        <Main />
-        <Footer />
+        { children }
       </Wrap>
     </>
   );
