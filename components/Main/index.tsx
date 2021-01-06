@@ -2,7 +2,8 @@
 import styled from '@emotion/styled'
 
 // Components
-import { ChartWidget } from '../ChartWidget'
+import { YandexChartWidget } from '../YandexChartWidget'
+import { PaypalChartWidget } from '../PaypalChartWidget'
 
 // Styled components
 const MainWrap = styled('main')`
@@ -30,22 +31,8 @@ const MainWrap = styled('main')`
 export function Main() {
   return (
     <MainWrap>
-      <ChartWidget
-        imgSrc='/images/yandex-logo.png'
-        imgAlt='Яндекс касса'
-        imgWidth='120'
-        imgHeight='32'
-        desc={30000}
-        trending={30000}
-      />
-      <ChartWidget
-        imgSrc='/images/paypal-logo.svg'
-        imgAlt='Paypal'
-        imgWidth='108'
-        imgHeight='28'
-        desc={50000}
-        trending={50000}
-      />
+      <YandexChartWidget />
+      <PaypalChartWidget />
     </MainWrap>
   )
 }

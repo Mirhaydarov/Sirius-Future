@@ -6,10 +6,10 @@ import styled from '@emotion/styled'
 import { chartFormatter, chartSumFormatter } from '../../utils'
 
 // Types
-import { chartDataTypes } from '../../init/types'
+import { ChartTypes } from '../../init/types'
 
 type ChartPropsTypes = {
-  data: chartDataTypes
+  data: ChartTypes[]
 }
 
 // Styles components
@@ -19,7 +19,7 @@ const AreaChartWrap = styled(AreaChart)`
 `
 
 // Component
-export function Chart({ data }: ChartPropsTypes) {  
+export function Chart({ data }: ChartPropsTypes) {
   return (
     <ResponsiveContainer
       width='100%'
