@@ -69,7 +69,7 @@ const ItemLabel= styled('span')<ItemLabelTypes>`
 // Component
 export function SidebarItem(props: SidebarItemPropsTypes) {
   const { title, path, icon, currentPage } = props;
-  console.log("🚀 ~ file: index.tsx ~ line 71 ~ SidebarItem ~ currentPage", currentPage);
+  
   const { state } = useContext(ContextApp);
   const { sidebar } = state;
 
