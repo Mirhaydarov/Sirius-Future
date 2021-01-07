@@ -1,5 +1,5 @@
 // Core
-import { MouseEvent, useState, useEffect, useContext } from 'react'
+import { MouseEvent, useState } from 'react'
 import styled from '@emotion/styled'
 
 // Components
@@ -7,25 +7,12 @@ import { Button } from '../Base'
 import { Chart } from '../Chart'
 import { ChartHeader } from '../ChartHeader'
 
-// Actions
-import {
-  fetchYandexChartDayData,
-  fetchYandexChartWeekData,
-  fetchYandexChartMonthData,
-  fetchPaypalChartDayData,
-  fetchPaypalChartWeekData,
-  fetchPaypalChartMonthData
-} from '../../init/actions'
-
-// Utils
-import { proceedsFormatter } from './proceedsFormatter'
-import { mockChartData } from '../../utils'
-import { getCurrentMonthLength } from '../../utils'
+// Hooks
+import { useChartData } from './hooks/useChartData'
+import { useMockData } from './hooks/useMockData'
 
 // Types
 import { ChartHeaderTypes } from '../ChartHeader'
-import { ContextApp } from '../../init/reducer'
-import { ChartTypes } from '../../init/types'
 
 type ChartWidgetPropsTypes = ChartHeaderTypes & {
   type: 'yandex' | 'paypal';
@@ -73,50 +60,17 @@ export function ChartWidget(props: ChartWidgetPropsTypes) {
   const { type } = props;
 
   const [currentBtn, setCurrentBtn] = useState('День');
-  const { state: { chartData }, dispatch} = useContext(ContextApp);
-  const [data, setData] = useState<ChartTypes []>([]);
-
-  const { proceedsSum, trendingSum } = proceedsFormatter(data);
-
-  useEffect(() => {
-    setData(chartData[type].day);
-  }, [chartData[type]]);
-  
-
-  function switchChartDataType(value: string) {
-    if (value === 'День') {
-      setData(chartData[type].day);
-    }
-
-    if (value === 'Неделя') {
-      setData(chartData[type].week);
-    }
-
-    if (value === 'Месяц') {
-      setData(chartData[type].month);
-    }
-  }
+  const { data, proceedsSum, trendingSum } = useChartData(type, currentBtn)
+  const { mockDataHandler } = useMockData();
 
   function currentButton(event: MouseEvent<HTMLButtonElement>) {
     const element = event.target as HTMLButtonElement;
     const value = element.value;
     setCurrentBtn(value);
-    return value;
   }
 
-  function buttonHandler(event: MouseEvent<HTMLButtonElement>) {
-    const value = currentButton(event);
-    switchChartDataType(value);
-  }
-
-  function mockDataHandler(event: MouseEvent<HTMLButtonElement>) {
+  function currentButtonHandler(event: MouseEvent<HTMLButtonElement>) {
     currentButton(event);
-    dispatch(fetchYandexChartDayData(mockChartData(7)))
-    dispatch(fetchPaypalChartDayData(mockChartData(7)))
-    dispatch(fetchYandexChartWeekData(mockChartData(7, 'week')))
-    dispatch(fetchPaypalChartWeekData(mockChartData(7, 'week')))
-    dispatch(fetchYandexChartMonthData(mockChartData(getCurrentMonthLength())))
-    dispatch(fetchPaypalChartMonthData(mockChartData(getCurrentMonthLength())))
   }
 
   return (
@@ -126,22 +80,22 @@ export function ChartWidget(props: ChartWidgetPropsTypes) {
           <Button
             value='День'
             type='button'
-            onClick={buttonHandler}
+            onClick={currentButtonHandler}
             isActive={currentBtn === 'День' ? true : false}>День</Button>
           <Button
             value='Неделя'
             type='button'
-            onClick={buttonHandler}
+            onClick={currentButtonHandler}
             isActive={currentBtn === 'Неделя' ? true : false}>Неделя</Button>
           <Button
             value='Месяц'
             type='button'
-            onClick={buttonHandler}
+            onClick={currentButtonHandler}
             isActive={currentBtn === 'Месяц' ? true : false}>Месяц</Button>
           <Button
             value='Новые данные'
             type='button'
-            onClick={mockDataHandler}
+            onClick={() => mockDataHandler(type)}
             isActive={currentBtn === 'Новые данные' ? true : false}>Новые данные</Button>
         </ButtonWrap>
         <ChartWrap>
