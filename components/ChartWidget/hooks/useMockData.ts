@@ -22,7 +22,6 @@ export function useMockData() {
   const { dispatch } = useContext(ContextApp);
 
   function mockDataHandler(type: TypeTypes = 'yandex') {
-    console.log(type);
     switch(type) {
       case 'yandex':
         dispatch(fetchYandexChartDayData(mockChartData(7)))
