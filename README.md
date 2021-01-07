@@ -32,6 +32,10 @@ Or you can use status bar:
 - React
 - Recharts
 
+## Build app
+If you want to build the app, firstly, you should start the server after that you can do it.
+This step need because otherwise build will failing because _next.js_ can't find mock data.
+
 ## For starting use this application you should initialize a project
 
 1. First of all, move to directory where you want to see this repo, with command in a terminal:
@@ -54,6 +58,11 @@ npm i
 4. For start app use command:
 ```zsh
 npm run dev
+```
+
+5. For build app use command:
+```zsh
+npm run build
 ```
 
 You can find more commands in root project directory in file package.json to section __"scripts"__.

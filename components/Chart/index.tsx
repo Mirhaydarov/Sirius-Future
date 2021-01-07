@@ -69,8 +69,8 @@ export function Chart({ data }: ChartPropsTypes) {
           labelStyle={{ color: '#6F6F6F', fontSize: '1rem' }}
           itemStyle={{ color: '#000000', fontSize: '1rem' }}
           cursor={false}
-          labelFormatter={(value: string | number) => [`Выручка за ${chartFormatter(value, 'long')}`]}
-          formatter={(value: string | number) => [`${value} ₽`] }
+          labelFormatter={(value) => [`Выручка за ${chartFormatter(value, 'long')}`]}
+          formatter={(value) => [`${value} ₽`] }
         />
         <Area
           type="monotone"
