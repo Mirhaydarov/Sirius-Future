@@ -33,12 +33,8 @@ const Wrap = styled('div')<WrapTypes>`
   background-color: ${({ isActive }) => isActive ? '#2E71F3;' : '#FFFFFF;'};
   padding: 15px;
 
-  @media (min-width: 780px) {
+  @media (min-width: 500px) {
     grid-area: ${({ isMoreInfo }) => isMoreInfo ? 'more' : 'auto'};
-  }
-
-  @media (min-width: 1400px) {
-    width: 278px;
   }
 `
 
