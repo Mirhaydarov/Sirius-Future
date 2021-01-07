@@ -9,26 +9,26 @@ import { widgetData } from '../../data/widgetData';
 // Styled components
 const FooterWrap = styled('footer')`
   display: grid;
-  grid-gap: 1.1rem;
   grid-template-columns: 1fr;
+  grid-gap: 1.1rem;
   padding: 0.6rem;
-  
-  @media (min-width: 780px) {
+
+  @media (min-width: 500px) {
     grid-template-areas: 'more more';
     grid-template-columns: repeat(2, 1fr);
+  }
+  
+  @media (min-width: 780px) {
+    grid-template-areas: 'more more more';
+    grid-template-columns: repeat(3, 1fr);
     margin-left: 1.1rem;
   }
 
   @media (min-width: 1000px) {
     grid-template-areas: 'more' 'more';
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     justify-content: space-between;
     align-items: space-between;
-  }
-
-  @media (min-width: 1400px) {
-    grid-template-areas: 'more' 'more';
-    grid-template-columns: repeat(4, min-content);
   }
 `
 

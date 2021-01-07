@@ -1,5 +1,5 @@
 // Core
-import { MouseEvent, useState } from 'react'
+import { MouseEvent, useContext, useState } from 'react'
 import styled from '@emotion/styled'
 
 // Components
@@ -13,34 +13,29 @@ import { useMockData } from './hooks/useMockData'
 
 // Types
 import { ChartHeaderTypes } from '../ChartHeader'
+import { ContextApp } from '../../init/reducer'
 
 type ChartWidgetPropsTypes = ChartHeaderTypes & {
   type: 'yandex' | 'paypal';
 }
 
+type WrapTypes = {
+  isToggled: boolean;
+}
+
 // Styled components
-const Wrap = styled('div')`
-  width: 230px;
+const Wrap = styled('div')<WrapTypes>`
+  width: 250px;
   margin-bottom: 1rem;
+  transition: 0.3s;
+  overflow: hidden;
 
-  @media (min-width: 600px) {
-    width: 100%;
-  }
-
-  @media (min-width: 780px) {
+  @media (min-width: 400px) {
     width: 100%;
   }
 
   @media (min-width: 1200px) {
-    width: 470px;
-  }
-
-  @media (min-width: 1300px) {
-    width: 525px;
-  }
-
-  @media (min-width: 1400px) {
-    width: 575px;
+    width: ${({ isToggled }) => isToggled ? '50%' : '100%'};
   }
 `
 
@@ -59,7 +54,9 @@ const ChartWrap = styled('div')`
 export function ChartWidget(props: ChartWidgetPropsTypes) {
   const { type } = props;
 
+  const { state: { sidebar } } = useContext(ContextApp);
   const [currentBtn, setCurrentBtn] = useState('День');
+  
   const { data, proceedsSum, trendingSum } = useChartData(type, currentBtn)
   const { mockDataHandler } = useMockData();
 
@@ -75,7 +72,7 @@ export function ChartWidget(props: ChartWidgetPropsTypes) {
 
   return (
     <>
-      <Wrap>
+      <Wrap isToggled={sidebar}>
         <ButtonWrap>
           <Button
             value='День'
