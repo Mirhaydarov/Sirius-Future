@@ -5,7 +5,6 @@ import styled from '@emotion/styled'
 
 // Styled components
 export const Wrap = styled('div')`
-  width: 100vw;
   height: 100vh;
   display: flex;
   flex-direction: column;
