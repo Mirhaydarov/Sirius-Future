@@ -8,7 +8,7 @@ import { proceedsFormatter } from '../proceedsFormatter'
 import { ContextApp } from '../../../init/reducer'
 import { ChartTypes } from '../../../init/types'
 
-type TypeTypes = 'yandex' | 'paypal';
+export type TypeTypes = 'yandex' | 'paypal';
 
 type DataTypeTypes = 'day' | 'week' | 'month';
 

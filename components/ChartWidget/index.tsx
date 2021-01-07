@@ -1,5 +1,5 @@
 // Core
-import { MouseEvent, useState, useContext } from 'react'
+import { MouseEvent, useState } from 'react'
 import styled from '@emotion/styled'
 
 // Components
@@ -9,23 +9,10 @@ import { ChartHeader } from '../ChartHeader'
 
 // Hooks
 import { useChartData } from './hooks/useChartData'
-
-// Actions
-import {
-  fetchYandexChartDayData,
-  fetchYandexChartWeekData,
-  fetchYandexChartMonthData,
-  fetchPaypalChartDayData,
-  fetchPaypalChartWeekData,
-  fetchPaypalChartMonthData
-} from '../../init/actions'
-
-// Utils
-import { mockChartData, getCurrentMonthLength } from '../../utils'
+import { useMockData } from './hooks/useMockData'
 
 // Types
 import { ChartHeaderTypes } from '../ChartHeader'
-import { ContextApp } from '../../init/reducer'
 
 type ChartWidgetPropsTypes = ChartHeaderTypes & {
   type: 'yandex' | 'paypal';
@@ -73,8 +60,8 @@ export function ChartWidget(props: ChartWidgetPropsTypes) {
   const { type } = props;
 
   const [currentBtn, setCurrentBtn] = useState('День');
-  const { dispatch } = useContext(ContextApp);
   const { data, proceedsSum, trendingSum } = useChartData(type, currentBtn)
+  const { mockDataHandler } = useMockData();
 
   function currentButton(event: MouseEvent<HTMLButtonElement>) {
     const element = event.target as HTMLButtonElement;
@@ -82,21 +69,8 @@ export function ChartWidget(props: ChartWidgetPropsTypes) {
     setCurrentBtn(value);
   }
 
-  function buttonHandler(event: MouseEvent<HTMLButtonElement>) {
+  function currentButtonHandler(event: MouseEvent<HTMLButtonElement>) {
     currentButton(event);
-  }
-
-  function mockDataHandler(event: MouseEvent<HTMLButtonElement>) {
-    currentButton(event);
-
-    dispatch(fetchYandexChartDayData(mockChartData(7)))
-    dispatch(fetchPaypalChartDayData(mockChartData(7)))
-
-    dispatch(fetchYandexChartWeekData(mockChartData(7, 'week')))
-    dispatch(fetchPaypalChartWeekData(mockChartData(7, 'week')))
-    
-    dispatch(fetchYandexChartMonthData(mockChartData(getCurrentMonthLength())))
-    dispatch(fetchPaypalChartMonthData(mockChartData(getCurrentMonthLength())))
   }
 
   return (
@@ -106,22 +80,22 @@ export function ChartWidget(props: ChartWidgetPropsTypes) {
           <Button
             value='День'
             type='button'
-            onClick={buttonHandler}
+            onClick={currentButtonHandler}
             isActive={currentBtn === 'День' ? true : false}>День</Button>
           <Button
             value='Неделя'
             type='button'
-            onClick={buttonHandler}
+            onClick={currentButtonHandler}
             isActive={currentBtn === 'Неделя' ? true : false}>Неделя</Button>
           <Button
             value='Месяц'
             type='button'
-            onClick={buttonHandler}
+            onClick={currentButtonHandler}
             isActive={currentBtn === 'Месяц' ? true : false}>Месяц</Button>
           <Button
             value='Новые данные'
             type='button'
-            onClick={mockDataHandler}
+            onClick={() => mockDataHandler(type)}
             isActive={currentBtn === 'Новые данные' ? true : false}>Новые данные</Button>
         </ButtonWrap>
         <ChartWrap>
