@@ -42,7 +42,7 @@ export function Chart({ data }: ChartPropsTypes) {
           axisLine={false}
           tickLine={false}
           tickMargin={14}
-          tickFormatter={(value) => chartFormatter(value)}
+          tickFormatter={(value: string | number) => chartFormatter(value)}
           />
         <YAxis 
           type="number"
@@ -69,8 +69,8 @@ export function Chart({ data }: ChartPropsTypes) {
           labelStyle={{ color: '#6F6F6F', fontSize: '1rem' }}
           itemStyle={{ color: '#000000', fontSize: '1rem' }}
           cursor={false}
-          labelFormatter={(value) => [`Выручка за ${chartFormatter(value, 'long')}`]}
-          formatter={(value) => [`${value} ₽`] }
+          labelFormatter={(value: string | number) => [`Выручка за ${chartFormatter(value, 'long')}`]}
+          formatter={(value: string | number) => [`${value} ₽`] }
         />
         <Area
           type="monotone"
