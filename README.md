@@ -1,7 +1,7 @@
 # Sirius Future
 
 ## About Project
-CRM page with your students.
+Personal area with your students.
 
 ## __Important!__
 Maybe you may get an error like
