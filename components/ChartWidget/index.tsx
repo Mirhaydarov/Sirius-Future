@@ -1,11 +1,14 @@
 // Core
-import { MouseEvent, useState, useEffect, useContext } from 'react'
+import { MouseEvent, useState, useContext } from 'react'
 import styled from '@emotion/styled'
 
 // Components
 import { Button } from '../Base'
 import { Chart } from '../Chart'
 import { ChartHeader } from '../ChartHeader'
+
+// Hooks
+import { useChartData } from './hooks/useChartData'
 
 // Actions
 import {
@@ -18,14 +21,12 @@ import {
 } from '../../init/actions'
 
 // Utils
-import { proceedsFormatter } from './proceedsFormatter'
 import { mockChartData } from '../../utils'
 import { getCurrentMonthLength } from '../../utils'
 
 // Types
 import { ChartHeaderTypes } from '../ChartHeader'
 import { ContextApp } from '../../init/reducer'
-import { ChartTypes } from '../../init/types'
 
 type ChartWidgetPropsTypes = ChartHeaderTypes & {
   type: 'yandex' | 'paypal';
@@ -73,40 +74,17 @@ export function ChartWidget(props: ChartWidgetPropsTypes) {
   const { type } = props;
 
   const [currentBtn, setCurrentBtn] = useState('День');
-  const { state: { chartData }, dispatch} = useContext(ContextApp);
-  const [data, setData] = useState<ChartTypes []>([]);
-
-  const { proceedsSum, trendingSum } = proceedsFormatter(data);
-
-  useEffect(() => {
-    setData(chartData[type].day);
-  }, [chartData[type]]);
-  
-
-  function switchChartDataType(value: string) {
-    if (value === 'День') {
-      setData(chartData[type].day);
-    }
-
-    if (value === 'Неделя') {
-      setData(chartData[type].week);
-    }
-
-    if (value === 'Месяц') {
-      setData(chartData[type].month);
-    }
-  }
+  const { dispatch } = useContext(ContextApp);
+  const { data, proceedsSum, trendingSum } = useChartData(type, currentBtn)
 
   function currentButton(event: MouseEvent<HTMLButtonElement>) {
     const element = event.target as HTMLButtonElement;
     const value = element.value;
     setCurrentBtn(value);
-    return value;
   }
 
   function buttonHandler(event: MouseEvent<HTMLButtonElement>) {
-    const value = currentButton(event);
-    switchChartDataType(value);
+    currentButton(event);
   }
 
   function mockDataHandler(event: MouseEvent<HTMLButtonElement>) {
