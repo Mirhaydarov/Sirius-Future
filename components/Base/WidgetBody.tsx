@@ -2,7 +2,7 @@
 import styled from '@emotion/styled'
 
 // Types
-import { widgetMoreInfoTypes } from './widgetData';
+import { widgetMoreInfoTypes } from '../../data/widgetData';
 
 type WidgetBodyPropsTypes = {
   title: string;
